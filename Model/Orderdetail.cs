@@ -3,12 +3,11 @@
     public class Orderdetail
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int OrderId { get; set; } = 0;
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
-        public string ProductDescription { get; set; }
-        public int ProductOrderId { get; set;} = 0;
+        public int Order_id { get; set; }
+        public int Product_id { get; set; }
+        public decimal Quantity { get; set; }
+        public float Price { get; set; }
+        public DateTime Created_at { get; set; } = DateTime.Now;
+        public DateTime Updated_at { get; set; } = DateTime.Now;
     }
 }

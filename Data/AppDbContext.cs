@@ -11,5 +11,6 @@ namespace Phamquangha_2122110195_1.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Orderdetail> Orderdetail { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }
