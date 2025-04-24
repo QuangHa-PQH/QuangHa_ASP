@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Phamquangha_2122110195_1.Data;
 using Phamquangha_2122110195_1.Model;
 
@@ -17,17 +17,17 @@ namespace Phamquangha_2122110195_1.Controllers
 
         // GET: api/OrderDetail
         [HttpGet]
-        public IActionResult GetAllOrderdetail()
+        public IActionResult GetAllOrderDetail()
         {
-            var Orderdetail = _context.Orderdetail.ToList();
-            return Ok(Orderdetail);
+            var orderDetails = _context.OrderDetail.ToList();
+            return Ok(orderDetails);
         }
 
         // GET: api/OrderDetail/{id}
         [HttpGet("{id}")]
         public IActionResult GetOrderDetailById(int id)
         {
-            var detail = _context.Orderdetail.Find(id);
+            var detail = _context.OrderDetail.Find(id);
             if (detail == null)
                 return NotFound();
 
@@ -36,28 +36,28 @@ namespace Phamquangha_2122110195_1.Controllers
 
         // POST: api/OrderDetail
         [HttpPost]
-        public IActionResult CreateOrderDetail([FromBody] Orderdetail detail)
+        public IActionResult CreateOrderDetail([FromBody] OrderDetail detail)
         {
             if (detail == null)
                 return BadRequest();
 
-            _context.Orderdetail.Add(detail);
+            _context.OrderDetail.Add(detail);
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetOrderDetailById), new { id = detail.Id }, detail);
         }
 
         // PUT: api/OrderDetail/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateOrderDetail(int id, [FromBody] Orderdetail detail)
+        public IActionResult UpdateOrderDetail(int id, [FromBody] OrderDetail detail)
         {
-            var existing = _context.Orderdetail.Find(id);
+            var existing = _context.OrderDetail.Find(id);
             if (existing == null)
                 return NotFound();
 
-            existing.Order_id = detail.Order_id;
-            existing.Product_id = detail.Product_id;
+            existing.OrderId = detail.OrderId;  // Cập nhật với tên mới
+            existing.ProductId = detail.ProductId;  // Cập nhật với tên mới
             existing.Quantity = detail.Quantity;
-            existing.Price = detail.Price;
+            existing.UnitPrice = detail.UnitPrice;  // Cập nhật với tên mới
             existing.Updated_at = DateTime.Now;
 
             _context.SaveChanges();
@@ -68,14 +68,13 @@ namespace Phamquangha_2122110195_1.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteOrderDetail(int id)
         {
-            var detail = _context.Orderdetail.Find(id);
+            var detail = _context.OrderDetail.Find(id);
             if (detail == null)
                 return NotFound();
 
-            _context.Orderdetail.Remove(detail);
+            _context.OrderDetail.Remove(detail);
             _context.SaveChanges();
             return NoContent();
         }
     }
 }
-*/

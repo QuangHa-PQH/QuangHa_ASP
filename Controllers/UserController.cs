@@ -1,82 +1,103 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Phamquangha_2122110195_1.Model;
 using Phamquangha_2122110195_1.Data;
-using Phamquangha_2122110195_1.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using BCrypt.Net;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Phamquangha_2122110195_1.DTO;
+using Phamquangha_2122110195_1.Services;
 
 namespace Phamquangha_2122110195_1.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly JwtService _jwtService;
 
-        public UserController(AppDbContext context)
+        public UserController(AppDbContext context, JwtService jwtService)
         {
             _context = context;
+            _jwtService = jwtService;
         }
 
-        // GET: api/User (Lấy danh sách user)
+        // GET: api/User
         [HttpGet]
         public IActionResult GetAllUsers()
         {
-            var users = _context.Users.ToList();
+            var users = _context.Users.Select(u => new UserDTO
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email,
+                Phone = u.Phone,
+                Address = u.Address,
+                Role = u.Role
+            }).ToList();
+
             return Ok(users);
         }
 
-        // GET: api/User/{id} (Lấy user theo ID)
+        // GET: api/User/{id}
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)
         {
             var user = _context.Users.Find(id);
             if (user == null)
-                return NotFound();
+                return NotFound(new { message = "Người dùng không tìm thấy" });
 
-            return Ok(user);
+            return Ok(new UserDTO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Phone = user.Phone,
+                Address = user.Address,
+                Role = user.Role
+            });
         }
 
-        // POST: api/User (Thêm user mới)
-        [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
-        {
-            if (user == null)
-                return BadRequest();
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
-        }
-
-        // PUT: api/User/{id} (Cập nhật user)
+        // PUT: api/User/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] User user)
+        public IActionResult UpdateUser(int id, [FromBody] UserDTO model)
         {
-            var existingUser = _context.Users.Find(id);
-            if (existingUser == null)
-                return NotFound();
+            var user = _context.Users.Find(id);
+            if (user == null)
+                return NotFound(new { message = "Người dùng không tìm thấy" });
 
-            existingUser.Name = user.Name;
-            existingUser.Email = user.Email;
-            existingUser.Password = user.Password;
-            existingUser.Phone = user.Phone;
-            existingUser.Address = user.Address;
-            existingUser.Role = user.Role;
-            existingUser.Updated_at = DateTime.Now;
+            user.Name = model.Name ?? user.Name;
+            user.Email = model.Email ?? user.Email;
+            user.Phone = model.Phone ?? user.Phone;
+            user.Address = model.Address ?? user.Address;
+            user.Role = model.Role ?? user.Role;
 
+
+            _context.Users.Update(user);
             _context.SaveChanges();
-            return NoContent();
+
+            return Ok(new { message = "Cập nhật thành công" });
         }
 
-        // DELETE: api/User/{id} (Xóa user)
+        // DELETE: api/User/{id}
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
             var user = _context.Users.Find(id);
             if (user == null)
-                return NotFound();
+                return NotFound(new { message = "Người dùng không tìm thấy" });
 
             _context.Users.Remove(user);
             _context.SaveChanges();
-            return NoContent();
+
+            return Ok(new { message = "Xóa người dùng thành công" });
+        }
+
+        private int GetUserIdFromToken()
+        {
+            var claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            return claim != null ? int.Parse(claim.Value) : 0;
         }
     }
 }

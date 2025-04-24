@@ -17,12 +17,12 @@ namespace Phamquangha_2122110195_1.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Cart", b =>
+            modelBuilder.Entity("Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,24 +33,31 @@ namespace Phamquangha_2122110195_1.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Product_id")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("User_id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Category", b =>
+            modelBuilder.Entity("Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,6 +88,69 @@ namespace Phamquangha_2122110195_1.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetail");
+                });
+
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Product_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("User_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
             modelBuilder.Entity("Phamquangha_2122110195_1.Model.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -92,14 +162,19 @@ namespace Phamquangha_2122110195_1.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Note")
+                    b.Property<string>("CustomerAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Orderdate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Shipping_address")
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerPhone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -107,21 +182,52 @@ namespace Phamquangha_2122110195_1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Total_amount")
+                    b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Orderdetail", b =>
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,33 +238,133 @@ namespace Phamquangha_2122110195_1.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Order_id")
-                        .HasColumnType("int");
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Product_id")
-                        .HasColumnType("int");
+                    b.Property<string>("Thumbnail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orderdetail");
+                    b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Product", b =>
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.PostDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostDetails");
+                });
+
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Stock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stocks");
+                });
+
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Brand_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Category_id")
                         .HasColumnType("int");
@@ -193,49 +399,86 @@ namespace Phamquangha_2122110195_1.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Brand_id");
+
+                    b.HasIndex("Category_id");
+
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Phamquangha_2122110195_1.Model.User", b =>
+            modelBuilder.Entity("OrderDetail", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Phamquangha_2122110195_1.Model.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.HasOne("Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Navigation("Order");
 
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
+                    b.Navigation("Product");
+                });
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Order", b =>
+                {
+                    b.HasOne("Phamquangha_2122110195_1.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Navigation("User");
+                });
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.PostDetail", b =>
+                {
+                    b.HasOne("Phamquangha_2122110195_1.Model.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Navigation("Post");
+                });
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Product", b =>
+                {
+                    b.HasOne("Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("Brand_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
+                    b.HasOne("Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("Category_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasKey("Id");
+                    b.Navigation("Brand");
 
-                    b.ToTable("Users");
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Brand", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Phamquangha_2122110195_1.Model.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }

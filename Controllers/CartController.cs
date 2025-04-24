@@ -1,9 +1,12 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Phamquangha_2122110195_1.Data;
 using Phamquangha_2122110195_1.Model;
 
 namespace Phamquangha_2122110195_1.Controllers
 {
+    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
@@ -77,4 +80,3 @@ namespace Phamquangha_2122110195_1.Controllers
         }
     }
 }
-*/

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj": {}
+    "E:\\PhamQuangHa_21221101915_ASP\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj": {}
   },
   "projects": {
-    "E:\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj": {
+    "E:\\PhamQuangHa_21221101915_ASP\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj",
+        "projectUniqueName": "E:\\PhamQuangHa_21221101915_ASP\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj",
         "projectName": "Phamquangha_2122110195_1",
-        "projectPath": "E:\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj",
+        "projectPath": "E:\\PhamQuangHa_21221101915_ASP\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\obj\\",
+        "outputPath": "E:\\PhamQuangHa_21221101915_ASP\\Phamquangha_2122110195_1\\Phamquangha_2122110195_1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,25 +49,27 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
+            "BCrypt.Net-Next": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[9.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[9.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.6.2, )"
             }
           },
           "imports": [
